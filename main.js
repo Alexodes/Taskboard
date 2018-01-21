@@ -692,9 +692,9 @@ var controller = (function(tbCtrl,UICtrl) {
         document.querySelector("#add_list_btn").addEventListener("click", ctrlAddList);
         
         // Event listener for deleting element
-        if(document.querySelector("#lists-list").childNodes.length > 0){
+        //if(document.querySelector("#lists-list").childNodes.length > 0){
             document.querySelector("#lists-list").addEventListener("click", ctrlDeleteList);
-        }
+        //}
 
         // Event listener for editing List title
         if(document.querySelector("#lists-list").childNodes.length >= 1){
@@ -707,9 +707,9 @@ var controller = (function(tbCtrl,UICtrl) {
         //}
 
         // Event listener for open a certain modal window for a card editing
-        if(document.querySelector("#lists-list").childNodes.length >= 1){
+        //if(document.querySelector("#lists-list").childNodes.length >= 1){
             document.querySelector("#lists-list").addEventListener("click", ctrlOpenModalWindow);
-        }
+        //}
 
         // Event listener for closing the modal window
         document.querySelector("#modal_container").addEventListener("click", ctrlCloseModalWindow);
@@ -866,7 +866,7 @@ var controller = (function(tbCtrl,UICtrl) {
         ListID = event.target.parentNode.parentNode.parentNode.parentNode.parentNode.getAttribute('data-id');
         ListToCardEdit = document.querySelector('li[data-id="' + ListID + '"]');
 
-        console.log(ListID);
+        
 
         if(CardID && ListID && event.target.id === "edit_note_btn") {
             var result = tbCtrl.OpenModal(CardID, ListID);
