@@ -847,7 +847,7 @@ var controller = (function(tbCtrl,UICtrl) {
         ElementToAddACard = event.target.parentNode.parentNode.parentNode.parentNode;
         ListID = ElementToAddACard.getAttribute('data-id');
         listItemToAddACard = document.querySelector('li[data-id="' + ListID + '"]');
-        console.log(ElementToAddACard);
+        
         
         if(ListID && event.target.id === "btn-add-card") {
             var newCard = tbCtrl.AddNewCard(ListID);
