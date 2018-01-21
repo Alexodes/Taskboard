@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,700" rel="stylesheet">
+    <script src="uuid.js"></script>
+    <script>
+    uuidv4(); // -> v4 UUID
+    </script>
+    <link rel="stylesheet" href="bootstrap_4.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+    <title>Users</title>
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+            <nav>
+                <a id="logo_img" href="/"><img src="taskboard-logo.svg" alt="logo"></a>
+                <ul class="tab">
+                    <li><a href="#board" class="tablinks" onclick="openCity(event, 'board')" id="defaultOpen">Board</a></li>
+                    <li><a href="#members" class="tablinks" onclick="openCity(event, 'members')">Members</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <main id="members" class="tabcontent">
+            <div class="members">
+                <h2>TaskBoard Members</h2>
+                <div class="members_form">
+                    <ul class="members_group"></ul>
+                    <input type="text" maxlength="25" placeholder="Add new member" class="new_member_input" id="new_member_input">
+                    <button type="button" class="btn btn-primary btn-add-member">Add</button>
+                </div>
+            </div>
+        </main>
+
+
+        <!-- LISTS LAYOUT IMPLEMENTATION -->
+        <div id="board" class="tabcontent">
+            <ul class="list-list">
+                <ul id="lists-list"></ul>
+                 <button type="button" class="btn btn-info btn-add-list" id="add_list_btn">Add a list...</button>
+            </ul>
+
+            <!-- MODAL WINDOW -->
+        <div class="modal_container" id="modal_container">
+            <div class="modal-content">
+
+                    <div class="modal-header">
+                        <h4 class="modal-title">Edit Card</h4>
+                        <button type="button" class="close" id="close_modal">
+                            <span id="close_modal_cross">&times;</span>
+                        </button>
+                    </div>
+            
+                    <div class="modal-middle">
+                        <form class="form-modal">
+                            <div class="form_card_text">
+                                <label class="control-label editable-input">Card Text</label>
+                                <div class="add_new_task_field">
+                                    <textarea class="form-control" id="card-text"></textarea>
+                                </div>
+                            </div>
+                            <div class="form_move_to">
+                                <label class="control-label editable-input">Move To</label>
+                                <div class="move_field">
+                                    <select class="form-controll list-holders" id="list_options"></select>
+                                </div>
+                            </div>
+                            
+                            <div class="members_input_area">
+                                <label class="member_labels">Members</label>
+                                <div class="checkbox_modal"></div>
+                            </div>
+                            <button class="btn btn-danger modal-delete-btn" id="delete_card-btn">Delete Card</button>
+                        </form>
+                    </div>
+            
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light close-btn" id="close_modal-btn">Close</button>
+                        <button type="button" class="btn btn-primary modal-save" id="save_card-btn">Save changes</button>
+                    </div>
+            
+            </div>
+        </div>
+                <!-- MODAL WINDOW END -->
+ 
+                
+        <!--/////////////////////////////-->
+
+    </div>
+    
+    <!-- Bootstrap needed files -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <script src="main.js"></script>
+</body>
+</html>
