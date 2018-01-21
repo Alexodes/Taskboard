@@ -337,20 +337,25 @@ var UIController = (function() {
                                         </div>
                                         <ul class="panel_notes" id="panel_notes">`;
                 
-                for(let card of list.tasks) {
-                    html += `<li class="note" data-id=${card.id}>
-                        <span id="span_for_text">${card.text}</span>
-                        <button type="button" class="btn btn-primary" id="edit_note_btn">Edit</button>
-                        <div id="label-holder">`;
 
-                        if(card.members.length !== 0) {
-                            for(let member of card.members) {
-                                html += `<span>${member.member_name.split(" ").map((n)=>n[0]).join("").toUpperCase()}</span>`;
+                if(list.tasks){
+                    for(let card of list.tasks) {
+                        html += `<li class="note" data-id=${card.id}>
+                            <span id="span_for_text">${card.text}</span>
+                            <button type="button" class="btn btn-primary" id="edit_note_btn">Edit</button>
+                            <div id="label-holder">`;
+
+                            if(card.members.length !== 0) {
+                                for(let member of card.members) {
+                                    html += `<span>${member.member_name.split(" ").map((n)=>n[0]).join("").toUpperCase()}</span>`;
+                                }
                             }
-                        }
 
-                        html += `</div></li>`;
-                }
+                            html += `</div></li>`;
+                    }
+            }
+
+
                 html += `</ul>
                 <div class="panel_footer">
                     <button class="btn-add_a_card" id="btn-add-card">Add a card...</button>
@@ -692,9 +697,9 @@ var controller = (function(tbCtrl,UICtrl) {
         document.querySelector("#add_list_btn").addEventListener("click", ctrlAddList);
         
         // Event listener for deleting element
-        if(document.querySelector("#lists-list").childNodes.length > 0){
+        //if(document.querySelector("#lists-list").childNodes.length > 0){
             document.querySelector("#lists-list").addEventListener("click", ctrlDeleteList);
-        }
+        //}
 
         // Event listener for editing List title
         if(document.querySelector("#lists-list").childNodes.length >= 1){
@@ -707,9 +712,9 @@ var controller = (function(tbCtrl,UICtrl) {
         //}
 
         // Event listener for open a certain modal window for a card editing
-        if(document.querySelector("#lists-list").childNodes.length >= 1){
+        //if(document.querySelector("#lists-list").childNodes.length >= 1){
             document.querySelector("#lists-list").addEventListener("click", ctrlOpenModalWindow);
-        }
+        //}
 
         // Event listener for closing the modal window
         document.querySelector("#modal_container").addEventListener("click", ctrlCloseModalWindow);
@@ -736,7 +741,7 @@ var controller = (function(tbCtrl,UICtrl) {
         UICtrl.clearMemberInput();
 
         // 5. save member to local storage
-        //tbCtrl.saveMembersToLocal();
+        tbCtrl.saveMembersToLocal();
     };
 
     var ctrlDeleteMember = function(event) {
@@ -751,7 +756,7 @@ var controller = (function(tbCtrl,UICtrl) {
             // 2. Delete the member from the ui
             UICtrl.deleteMemberItem(memberToDelete);
             // 5. save member to local storage
-            //tbCtrl.saveMembersToLocal();
+            tbCtrl.saveMembersToLocal();
         };
     };
 
@@ -764,6 +769,7 @@ var controller = (function(tbCtrl,UICtrl) {
 
         if(memberToEditID && event.target.id === "edit-btn") {
             UICtrl.handleEditMember(memberToEdit);
+            tbCtrl.saveMembersToLocal();
         }
     };
 
@@ -791,7 +797,7 @@ var controller = (function(tbCtrl,UICtrl) {
             // 2. add the item to the tbController
             var EditedObjM = tbCtrl.saveMember(memberToEditIndex, editionOfMember);
             UICtrl.handleSaveMember(memberToSaveElement, EditedObjM);  
-            //tbCtrl.saveMembersToLocal();
+            tbCtrl.saveMembersToLocal();
         }
         
     };
@@ -801,7 +807,7 @@ var controller = (function(tbCtrl,UICtrl) {
         var new_list = tbCtrl.addNewList();
         // 2. Add new html with UI controller
         UICtrl.addNewListItem(new_list);
-        //tbCtrl.saveBoardToLocal();
+        tbCtrl.saveBoardToLocal();
     };
 
     var ctrlDeleteList = function(event) {
@@ -818,7 +824,7 @@ var controller = (function(tbCtrl,UICtrl) {
             tbCtrl.deleteList(ListID);
             // 2. Delete the member from the ui
             UICtrl.deleteListItem(listItemToDelete);
-            //tbCtrl.saveBoardToLocal();
+            tbCtrl.saveBoardToLocal();
         };
     };
 
@@ -847,13 +853,13 @@ var controller = (function(tbCtrl,UICtrl) {
         ElementToAddACard = event.target.parentNode.parentNode.parentNode.parentNode;
         ListID = ElementToAddACard.getAttribute('data-id');
         listItemToAddACard = document.querySelector('li[data-id="' + ListID + '"]');
-        console.log(ElementToAddACard);
+        
         
         if(ListID && event.target.id === "btn-add-card") {
             var newCard = tbCtrl.AddNewCard(ListID);
             UICtrl.handleAddNewCard(listItemToAddACard, newCard);
             
-            //tbCtrl.saveBoardToLocal();
+            tbCtrl.saveBoardToLocal();
         }
     };
 
@@ -865,6 +871,8 @@ var controller = (function(tbCtrl,UICtrl) {
 
         ListID = event.target.parentNode.parentNode.parentNode.parentNode.parentNode.getAttribute('data-id');
         ListToCardEdit = document.querySelector('li[data-id="' + ListID + '"]');
+
+        
 
         if(CardID && ListID && event.target.id === "edit_note_btn") {
             var result = tbCtrl.OpenModal(CardID, ListID);
@@ -894,7 +902,7 @@ var controller = (function(tbCtrl,UICtrl) {
             tbCtrl.deleteCard(listid, cardid);
             UICtrl.handleDeleteCard(cardToDelete);
             UICtrl.handleCloseModal();
-            //tbCtrl.saveBoardToLocal();
+            tbCtrl.saveBoardToLocal();
         }
     };
 
@@ -923,10 +931,10 @@ var controller = (function(tbCtrl,UICtrl) {
                     UICtrl.handleDeleteCard(cardToChange);
                     UICtrl.SwitchCard(ListToAddCardNewToIt, cardToChange)
                    
-                    //tbCtrl.saveBoardToLocal();
+                    tbCtrl.saveBoardToLocal();
                 }
                
-            //tbCtrl.saveBoardToLocal(); 
+            tbCtrl.saveBoardToLocal(); 
             UICtrl.handleCloseModal();
         }
     };
@@ -934,14 +942,18 @@ var controller = (function(tbCtrl,UICtrl) {
     return {
         init: function() {
             console.log("Application has started!");
-            // var local_members = tbCtrl.loadMembersFromLocal();
-            // if(local_members.length !== 0) {
-            //     UICtrl.loadMembersToUI(local_members);
-            // }
-            // var local_board = tbCtrl.loadBoardFromLocal();
-            // if(local_board.length !== 0) {
-            //     UICtrl.loadBoardToUI(local_board);
-            // }
+            var local_members = tbCtrl.loadMembersFromLocal();
+            if(local_members.length !== 0) {
+                UICtrl.loadMembersToUI(local_members);
+            }
+
+
+            var local_board = tbCtrl.loadBoardFromLocal();
+            if(local_board.length !== 0) {
+                UICtrl.loadBoardToUI(local_board);
+            }
+
+
             setEventListeners();
         }
     };
