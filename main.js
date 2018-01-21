@@ -337,6 +337,8 @@ var UIController = (function() {
                                         </div>
                                         <ul class="panel_notes" id="panel_notes">`;
                 
+
+                if(list.tasks.length !== 0){
                 for(let card of list.tasks) {
                     html += `<li class="note" data-id=${card.id}>
                         <span id="span_for_text">${card.text}</span>
@@ -351,6 +353,9 @@ var UIController = (function() {
 
                         html += `</div></li>`;
                 }
+            }
+
+
                 html += `</ul>
                 <div class="panel_footer">
                     <button class="btn-add_a_card" id="btn-add-card">Add a card...</button>
