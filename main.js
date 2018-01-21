@@ -792,7 +792,7 @@ var controller = (function(tbCtrl,UICtrl) {
             // 2. add the item to the tbController
             var EditedObjM = tbCtrl.saveMember(memberToEditIndex, editionOfMember);
             UICtrl.handleSaveMember(memberToSaveElement, EditedObjM);  
-            //tbCtrl.saveMembersToLocal();
+            tbCtrl.saveMembersToLocal();
         }
         
     };
@@ -802,7 +802,7 @@ var controller = (function(tbCtrl,UICtrl) {
         var new_list = tbCtrl.addNewList();
         // 2. Add new html with UI controller
         UICtrl.addNewListItem(new_list);
-        //tbCtrl.saveBoardToLocal();
+        tbCtrl.saveBoardToLocal();
     };
 
     var ctrlDeleteList = function(event) {
@@ -819,7 +819,7 @@ var controller = (function(tbCtrl,UICtrl) {
             tbCtrl.deleteList(ListID);
             // 2. Delete the member from the ui
             UICtrl.deleteListItem(listItemToDelete);
-            //tbCtrl.saveBoardToLocal();
+            tbCtrl.saveBoardToLocal();
         };
     };
 
@@ -854,7 +854,7 @@ var controller = (function(tbCtrl,UICtrl) {
             var newCard = tbCtrl.AddNewCard(ListID);
             UICtrl.handleAddNewCard(listItemToAddACard, newCard);
             
-            //tbCtrl.saveBoardToLocal();
+            tbCtrl.saveBoardToLocal();
         }
     };
 
@@ -897,7 +897,7 @@ var controller = (function(tbCtrl,UICtrl) {
             tbCtrl.deleteCard(listid, cardid);
             UICtrl.handleDeleteCard(cardToDelete);
             UICtrl.handleCloseModal();
-            //tbCtrl.saveBoardToLocal();
+            tbCtrl.saveBoardToLocal();
         }
     };
 
@@ -926,10 +926,10 @@ var controller = (function(tbCtrl,UICtrl) {
                     UICtrl.handleDeleteCard(cardToChange);
                     UICtrl.SwitchCard(ListToAddCardNewToIt, cardToChange)
                    
-                    //tbCtrl.saveBoardToLocal();
+                    tbCtrl.saveBoardToLocal();
                 }
                
-            //tbCtrl.saveBoardToLocal(); 
+            tbCtrl.saveBoardToLocal(); 
             UICtrl.handleCloseModal();
         }
     };
@@ -941,10 +941,14 @@ var controller = (function(tbCtrl,UICtrl) {
             if(local_members.length !== 0) {
                 UICtrl.loadMembersToUI(local_members);
             }
-            // var local_board = tbCtrl.loadBoardFromLocal();
-            // if(local_board.length !== 0) {
-            //     UICtrl.loadBoardToUI(local_board);
-            // }
+
+
+            var local_board = tbCtrl.loadBoardFromLocal();
+            if(local_board.length !== 0) {
+                UICtrl.loadBoardToUI(local_board);
+            }
+
+
             setEventListeners();
         }
     };
