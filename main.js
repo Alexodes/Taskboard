@@ -866,6 +866,8 @@ var controller = (function(tbCtrl,UICtrl) {
         ListID = event.target.parentNode.parentNode.parentNode.parentNode.parentNode.getAttribute('data-id');
         ListToCardEdit = document.querySelector('li[data-id="' + ListID + '"]');
 
+        console.log(ListID);
+
         if(CardID && ListID && event.target.id === "edit_note_btn") {
             var result = tbCtrl.OpenModal(CardID, ListID);
             UICtrl.handleOpenModal(result);
