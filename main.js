@@ -736,7 +736,7 @@ var controller = (function(tbCtrl,UICtrl) {
         UICtrl.clearMemberInput();
 
         // 5. save member to local storage
-        //tbCtrl.saveMembersToLocal();
+        tbCtrl.saveMembersToLocal();
     };
 
     var ctrlDeleteMember = function(event) {
@@ -751,7 +751,7 @@ var controller = (function(tbCtrl,UICtrl) {
             // 2. Delete the member from the ui
             UICtrl.deleteMemberItem(memberToDelete);
             // 5. save member to local storage
-            //tbCtrl.saveMembersToLocal();
+            tbCtrl.saveMembersToLocal();
         };
     };
 
@@ -764,6 +764,7 @@ var controller = (function(tbCtrl,UICtrl) {
 
         if(memberToEditID && event.target.id === "edit-btn") {
             UICtrl.handleEditMember(memberToEdit);
+            tbCtrl.saveMembersToLocal();
         }
     };
 
@@ -936,10 +937,10 @@ var controller = (function(tbCtrl,UICtrl) {
     return {
         init: function() {
             console.log("Application has started!");
-            // var local_members = tbCtrl.loadMembersFromLocal();
-            // if(local_members.length !== 0) {
-            //     UICtrl.loadMembersToUI(local_members);
-            // }
+            var local_members = tbCtrl.loadMembersFromLocal();
+            if(local_members.length !== 0) {
+                UICtrl.loadMembersToUI(local_members);
+            }
             // var local_board = tbCtrl.loadBoardFromLocal();
             // if(local_board.length !== 0) {
             //     UICtrl.loadBoardToUI(local_board);
