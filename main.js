@@ -338,21 +338,21 @@ var UIController = (function() {
                                         <ul class="panel_notes" id="panel_notes">`;
                 
 
-                if(list.tasks.length !== 0){
-                for(let card of list.tasks) {
-                    html += `<li class="note" data-id=${card.id}>
-                        <span id="span_for_text">${card.text}</span>
-                        <button type="button" class="btn btn-primary" id="edit_note_btn">Edit</button>
-                        <div id="label-holder">`;
+                if(list.tasks){
+                    for(let card of list.tasks) {
+                        html += `<li class="note" data-id=${card.id}>
+                            <span id="span_for_text">${card.text}</span>
+                            <button type="button" class="btn btn-primary" id="edit_note_btn">Edit</button>
+                            <div id="label-holder">`;
 
-                        if(card.members.length !== 0) {
-                            for(let member of card.members) {
-                                html += `<span>${member.member_name.split(" ").map((n)=>n[0]).join("").toUpperCase()}</span>`;
+                            if(card.members.length !== 0) {
+                                for(let member of card.members) {
+                                    html += `<span>${member.member_name.split(" ").map((n)=>n[0]).join("").toUpperCase()}</span>`;
+                                }
                             }
-                        }
 
-                        html += `</div></li>`;
-                }
+                            html += `</div></li>`;
+                    }
             }
 
 
