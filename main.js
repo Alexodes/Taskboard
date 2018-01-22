@@ -876,6 +876,7 @@ var controller = (function(tbCtrl,UICtrl) {
             tbCtrl.editListTitle(ListID,newTitle);
             UICtrl.handleChangeListTitle(listItemToEdit, newTitle);
             UICtrl.handleSaveNewListTitle(listItemToEdit);
+            tbCtrl.saveBoardToLocal();
         }
     }
 
