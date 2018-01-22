@@ -340,7 +340,7 @@ var UIController = (function() {
 
                 if(list.tasks){
                     for(let card of list.tasks) {
-                        html += `<li class="note" data-id=${card.id}>
+                        html += `<li class="note" data-id=${card.id} draggable="true">
                             <span id="span_for_text">${card.text}</span>
                             <button type="button" class="btn btn-primary" id="edit_note_btn">Edit</button>
                             <div id="label-holder">`;
@@ -523,8 +523,14 @@ var UIController = (function() {
             var listTitle = TitleToEdit.querySelector("#panel-title");
             var inputTitle = TitleToEdit.querySelector("#input_list_change");
 
+            
             listTitle.classList.add("displayState");
             inputTitle.classList.remove("displayState");
+            inputTitle.focus();
+        },
+
+        getNewListTitleInput: function(node) {
+            return node.querySelector("#input_list_change").value;
         },
 
         handleSaveNewListTitle: function(ListTitleToSaveElement) {
@@ -535,10 +541,14 @@ var UIController = (function() {
             inputTitle.classList.add("displayState");
         },
 
+        handleChangeListTitle: function(list, new_title) {
+            list.querySelector("#panel-title").innerHTML = new_title;
+        },
+
         handleAddNewCard: function(listToAddCard, NewCardsObj) {
             var toWhatToAttach = listToAddCard.querySelector("#panel_notes");
 
-            var newCardHTML = `<li class="note" data-id=${NewCardsObj.id}>
+            var newCardHTML = `<li class="note" data-id=${NewCardsObj.id} draggable="true">
                                     <span id="span_for_text">${NewCardsObj.text}</span>
                                     <button type="button" class="btn btn-primary" id="edit_note_btn">Edit</button>
                                     <div id="label-holder"></div>
@@ -658,8 +668,7 @@ var UIController = (function() {
         SwitchCard: function(listToAttachCard, CardObj) {
             var toWhatToAttach = listToAttachCard.querySelector("#panel_notes");
             toWhatToAttach.appendChild(CardObj);
-        },
-        
+        },        
     };
 
 })();
@@ -702,9 +711,12 @@ var controller = (function(tbCtrl,UICtrl) {
         //}
 
         // Event listener for editing List title
-        if(document.querySelector("#lists-list").childNodes.length >= 1){
+        //if(document.querySelector("#lists-list").childNodes.length >= 1){
             document.querySelector("#lists-list").addEventListener("click", ctrlEditListTitle);
-        }
+        //}
+        
+
+            //document.querySelector("#lists-list").addEventListener("blur", ctrlSaveListTitle);
 
         // Event listener for addition of new Card
         //if(document.querySelector("#lists-list").childNodes.length >= 1){
@@ -725,6 +737,13 @@ var controller = (function(tbCtrl,UICtrl) {
         // Event listener for save changes in card
         document.querySelector("#modal_container").addEventListener("click", ctrlSaveCard);
         
+    };
+
+    var setEventListenerForListInput = function() {
+        var listsClass = document.getElementsByClassName("list-li");
+            for (var i = 0; i < listsClass.length; i++) {
+                listsClass[i].querySelector("#input_list_change").addEventListener("blur", ctrlSaveListTitle);
+            }
     };
 
     var ctrlAddMember = function() {
@@ -807,6 +826,7 @@ var controller = (function(tbCtrl,UICtrl) {
         var new_list = tbCtrl.addNewList();
         // 2. Add new html with UI controller
         UICtrl.addNewListItem(new_list);
+        setEventListenerForListInput();
         tbCtrl.saveBoardToLocal();
     };
 
@@ -837,12 +857,27 @@ var controller = (function(tbCtrl,UICtrl) {
         ListID = ElementToEdit.getAttribute('data-id');
         listItemToEdit = document.querySelector('li[data-id="' + ListID + '"]');
 
-        if(event.target.id === "panel-title"){
+        if(event.target.id === "panel-title") {
             UICtrl.handleEditListTitle(listItemToEdit);
-        } else {
-            return null;
         }
     };
+
+    var ctrlSaveListTitle = function(event) {
+        var ListID,
+            ElementToEdit,
+            listItemToEdit;
+
+        ElementToEdit = event.target.parentNode.parentNode.parentNode.parentNode;
+        ListID = ElementToEdit.getAttribute('data-id');
+        listItemToEdit = document.querySelector('li[data-id="' + ListID + '"]');
+
+        if(listItemToEdit.querySelector("#input_list_change").style.display !== "none") {
+            var newTitle = UICtrl.getNewListTitleInput(listItemToEdit);
+            tbCtrl.editListTitle(ListID,newTitle);
+            UICtrl.handleChangeListTitle(listItemToEdit, newTitle);
+            UICtrl.handleSaveNewListTitle(listItemToEdit);
+        }
+    }
 
 
     var ctrlAddCard = function(event) {
@@ -955,6 +990,7 @@ var controller = (function(tbCtrl,UICtrl) {
 
 
             setEventListeners();
+            setEventListenerForListInput();
         }
     };
 
