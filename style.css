@@ -456,3 +456,8 @@ ul#lists-list {
 .dropdown-item {
     cursor: pointer;
 }
+
+div#board {
+    height: calc(100vh - 90px);
+    overflow-y: hidden;
+}
