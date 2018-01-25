@@ -460,4 +460,5 @@ ul#lists-list {
 div#board {
     height: calc(100vh - 90px);
     overflow-y: hidden;
+    padding-top: 5px;
 }
