@@ -432,6 +432,14 @@ ul#lists-list {
     margin-left: 5px;
 }
 
+#label-holder span:nth-child(even) {
+    background-color: #337ab7;
+}
+
+#label-holder span:nth-child(odd) {
+    background-color: #dc3545;
+}
+
 #delete-btn {
     visibility: hidden;
 }
@@ -462,3 +470,8 @@ div#board {
     overflow-y: hidden;
     padding-top: 5px;
 }
+
+/* For drop functionality */
+.dropable{
+    background-color: #20c997;
+  }

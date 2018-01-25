@@ -1065,7 +1065,7 @@ var controller = (function(tbCtrl,UICtrl) {
 
             setEventListeners();
             setEventListenerForListInput();
-        }
+        },
     };
 
 })(tbController, UIController);
