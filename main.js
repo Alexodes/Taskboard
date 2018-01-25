@@ -283,6 +283,22 @@ var tbController = (function() {
             }
         },
 
+        handleDeleteMemberFromCard: function(member_todelete_id) {
+           
+            for(let list of data.board) {
+                for(let card of list.tasks) {
+                    if(card.members.length != 0) {
+                        for(let i in card.members) {
+                            if(card.members[i].member_id == member_todelete_id) {
+                                card.members.splice(i,1);
+                            }
+                        }
+                    }
+                }
+            }
+            return data.board;
+        },
+
          testing: function() {
              console.log(data);
          }
@@ -367,6 +383,56 @@ var UIController = (function() {
 
             document.querySelector("#lists-list").insertAdjacentHTML('beforeend', html);
 
+        },
+
+        customloadBoardToUI: function(obj) {
+            var html = ``;
+
+            for(let list of obj) {
+                html += `<li class="list-li" data-id=${list.id}>
+                                <div class="list-content">
+                                    <div class="panel">
+                                        <div class="panel_header">
+                                            <h3 class="panel-title" id="panel-title">${list.title}</h3>
+                                            <input type="text" class="input_list_change displayState" id="input_list_change" value="${list.title}">
+                                            <div class="dropdown_delete">
+                                            <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                              <a class="dropdown-item" id="delete_list_btn">Delete list</a>
+                                            </div>
+                                          </div>
+                                        </div>
+                                        <ul class="panel_notes" id="panel_notes">`;
+                
+
+                if(list.tasks){
+                    for(let card of list.tasks) {
+                        html += `<li class="note" data-id=${card.id} draggable="true">
+                            <span id="span_for_text">${card.text}</span>
+                            <button type="button" class="btn btn-primary" id="edit_note_btn">Edit</button>
+                            <div id="label-holder">`;
+
+                            if(card.members.length !== 0) {
+                                for(let member of card.members) {
+                                    html += `<span>${member.member_name.split(" ").map((n)=>n[0]).join("").toUpperCase()}</span>`;
+                                }
+                            }
+
+                            html += `</div></li>`;
+                    }
+            }
+
+
+                html += `</ul>
+                <div class="panel_footer">
+                    <button class="btn-add_a_card" id="btn-add-card">Add a card...</button>
+                            </div>
+                        </div>
+                    </div>
+                </li>`;
+            }
+
+            document.querySelector("#lists-list").innerHTML = html;
         },
 
         getNewMemberInput: function() {
@@ -774,8 +840,15 @@ var controller = (function(tbCtrl,UICtrl) {
             tbCtrl.deleteMember(memberID);
             // 2. Delete the member from the ui
             UICtrl.deleteMemberItem(memberToDelete);
-            // 5. save member to local storage
+
+            var updatedBoard = tbCtrl.handleDeleteMemberFromCard(memberID);
+            
+            // Custom update board function needed
+            UICtrl.customloadBoardToUI(updatedBoard);
+
+            // Local
             tbCtrl.saveMembersToLocal();
+            tbCtrl.saveBoardToLocal();
         };
     };
 
@@ -876,6 +949,7 @@ var controller = (function(tbCtrl,UICtrl) {
             tbCtrl.editListTitle(ListID,newTitle);
             UICtrl.handleChangeListTitle(listItemToEdit, newTitle);
             UICtrl.handleSaveNewListTitle(listItemToEdit);
+            tbCtrl.saveBoardToLocal();
         }
     }
 
