@@ -432,6 +432,14 @@ ul#lists-list {
     margin-left: 5px;
 }
 
+#label-holder span:nth-child(even) {
+    background-color: #337ab7;
+}
+
+#label-holder span:nth-child(odd) {
+    background-color: #dc3545;
+}
+
 #delete-btn {
     visibility: hidden;
 }
@@ -455,4 +463,10 @@ ul#lists-list {
 
 .dropdown-item {
     cursor: pointer;
+}
+
+div#board {
+    height: calc(100vh - 90px);
+    overflow-y: hidden;
+    padding-top: 5px;
 }
