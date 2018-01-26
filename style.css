@@ -470,8 +470,3 @@ div#board {
     overflow-y: hidden;
     padding-top: 5px;
 }
-
-/* For drop functionality */
-.dropable{
-    background-color: #ffc107;
-}
